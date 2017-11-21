@@ -31,10 +31,12 @@ jobs:
 #       BUILD 
       - run:
           name: Build backend
-          command: yarn run build
+          command: |
+            yarn run build
       - run:
           name: Build web
-          command: yarn run build-ui
+          command: |
+            yarn run build-ui
 
 #       DEPLOY HEROKU
         deployment:
