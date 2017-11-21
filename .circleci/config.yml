@@ -38,9 +38,9 @@ jobs:
           command: |
             yarn run build-ui
 
-#       DEPLOY HEROKU
-        deployment:
-          staging:
-            branch: master
-            heroku:
-              appname: brosklasse
+# DEPLOY HEROKU
+  deployment:
+    staging:
+      branch: master
+      heroku:
+        appname: brosklasse
