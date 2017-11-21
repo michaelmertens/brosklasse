@@ -1,0 +1,62 @@
+{
+  "name": "brosklasse",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node -r dotenv/config --inspect=9300 index.js",
+    "start-pm2": "pm2 start index.js -f --name hydra --watch --node-args=\"-r ./dotenv-local.js --inspect=9300\"",
+    "tslint": "gulp tslint",
+    "build": "gulp",
+    "build-ui": "rimraf .\\public\\dist && cd public && ng build --prod"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/michaelmertens/brosklasse.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://github.com/michaelmertens/brosklasse#readme",
+  "devDependencies": {
+    "@angular/cli": "^1.2.0",
+    "@types/bluebird": "^3.5.8",
+    "@types/express": "^4.0.36",
+    "@types/jest": "^20.0.2",
+    "@types/mongoose": "^4.7.27",
+    "@types/nock": "^8.2.1",
+    "@types/node": "^8.0.7",
+    "@types/request-promise": "^4.1.35",
+    "dotenv": "^4.0.0",
+    "gulp": "^3.9.1",
+    "gulp-jest": "^2.0.0",
+    "gulp-nsp": "^2.4.2",
+    "gulp-tslint": "^8.1.1",
+    "gulp-typescript": "^3.1.7",
+    "nock": "^9.0.13",
+    "rimraf": "^2.6.1",
+    "run-sequence": "^2.1.0",
+    "supertest": "^3.0.0",
+    "tslint": "^5.5.0",
+    "tslint-config-airbnb": "^5.2.1",
+    "typescript": "^2.4.1"
+  },
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "body-parser": "^1.17.2",
+    "compression": "^1.6.2",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.15.3",
+    "helmet": "^3.6.1",
+    "heroku-logger": "^0.1.1",
+    "jsonwebtoken": "^7.4.1",
+    "karma-phantomjs-launcher": "^1.0.4",
+    "moment": "^2.18.1",
+    "moment-timezone": "^0.5.13",
+    "mongoose": "^4.11.1",
+    "request": "^2.81.0",
+    "request-promise": "^4.2.1"
+  },
+  "engines": {
+    "node": "8.8.1"
+  }
+}

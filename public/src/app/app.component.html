@@ -1,0 +1,20 @@
+<video autoplay loop muted id="bgvid">
+  <source src="assets/smoke.webm" type="video/webm">
+</video>
+
+<div class="content flex-center">
+  <h1>Brosklasse 2017</h1>
+
+  <ng-container *ngIf="!isSubmitted">
+    <p>You interested?</p>
+
+    <input type="email" [(ngModel)]="email" placeholder="Give us your e-mail" />
+
+    <button [disabled]="isSubmitting" (click)="decline()">No, thanks</button>
+    <button [disabled]="isSubmitting" (click)="submit()">Awesome!</button>
+  </ng-container>
+
+  <ng-container *ngIf="isSubmitted">
+    <span>Don't call us, we'll call you!</span>
+  </ng-container>
+</div>

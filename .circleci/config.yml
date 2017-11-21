@@ -1,0 +1,44 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:7.10
+
+    working_directory: ~/brosklasse
+
+    steps:
+      - checkout
+
+#       DEPENDENCIES 
+      - restore_cache:
+          keys:
+          - root-node-{{ checksum "yarn.lock" }}
+          # fallback to using the latest cache if no exact match is found
+          - root-node-
+
+      - run:
+          name: Yarn Dependencies
+          command: |
+            yarn install --ignore-engines
+            cd public
+            yarn install --ignore-engines
+
+      - save_cache:
+          key: root-node-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules
+
+#       BUILD 
+      - run:
+          name: Build backend
+          command: yarn run build
+      - run:
+          name: Build web
+          command: yarn run build-ui
+
+#       DEPLOY HEROKU
+        deployment:
+          staging:
+            branch: master
+            heroku:
+              appname: brosklasse
