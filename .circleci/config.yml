@@ -45,6 +45,7 @@ jobs:
             yarn run build-ui
 
 #       DEPLOY HEROKU
+# echo 'heroku.com ssh-rsa $HEROKU_SSH_KEY' >> ~/.ssh/known_hosts
       - run:
           name: Deploy Heroku
           command: |
@@ -56,5 +57,4 @@ jobs:
             git add server/**/*.js -f --all
             git add public/dist -f --all
             git commit -am "Committing build output" || true
-            echo 'heroku.com ssh-rsa $HEROKU_SSH_KEY' >> ~/.ssh/known_hosts
-            git push $HEROKU_TARGET --force --no-verify
+            git push -f git@heroku.com:brosklasse.git master:master --no-verify --force -q
