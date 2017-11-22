@@ -42,11 +42,15 @@ jobs:
 #       DEPLOY HEROKU
 # echo 'heroku.com ssh-rsa $HEROKU_SSH_KEY' >> ~/.ssh/known_hosts
       - add-ssh-keys:
-          fingerprints: "8b:48:5e:67:0e:c9:16:47:32:f2:87:0c:1f:c8:60:ad"
+          fingerprints:
+            - "12:b8:85:7e:8b:5b:bc:f3:6f:21:65:03:be:76:0e:4a"
+            - "48:a0:87:54:ca:75:32:12:c6:9e:a2:77:a4:7a:08:a4"
+            - "8b:48:5e:67:0e:c9:16:47:32:f2:87:0c:1f:c8:60:ad"
 
       - deploy:
           name: Deploy Heroku
           command: |
+            ssh-keyscan -H heroku.com >> ~/.ssh/known_hosts
             git config --global user.email "mertens.michael@hotmail.com"
             git config --global user.name "Michael Mertens"
             # "[[ ! -s \"$(git rev-parse --git-dir)/shallow\" ]] || git fetch --unshallow"
