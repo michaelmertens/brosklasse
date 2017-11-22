@@ -35,10 +35,9 @@ public/bower_components
 public/.tmp
 
 typings
+*.js.map
 index.js
-index.js.map
 server/**/*.js
-server/**/*.js.map
 /public/src/app/config.js
 /public/src/api-contracts/*.js
 /.env

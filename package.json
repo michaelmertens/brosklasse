@@ -53,6 +53,7 @@
     "moment": "^2.18.1",
     "moment-timezone": "^0.5.13",
     "mongoose": "^4.11.1",
+    "q": "^1.5.1",
     "request": "^2.81.0",
     "request-promise": "^4.2.1"
   },
