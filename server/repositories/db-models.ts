@@ -1,6 +1,7 @@
 import * as mongoose from 'mongoose';
 
 export interface IRegistration {
+  _id: string;
   code: string;
   email?: string;
   registeredAt?: Date;
@@ -19,7 +20,7 @@ const registrationTrackingSchema = new mongoose.Schema({
 });
 
 export const registrationSchema = new mongoose.Schema({
-  code: { type: String },
+  code: { type: String, unique: true },
   email: { type: String },
   registeredAt: { type: Date },
 

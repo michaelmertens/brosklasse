@@ -11,18 +11,47 @@ export function initializeSchema() {
   registrationsModel = mongoose.model('Registration', registrationSchema);
 }
 
-export function getRegistrationByCode(code: string): IRegistration {
-  return Q.Promise((resolve, reject) =>  {
-    registrationsModel.findOne({ code })
+/**
+ * Read
+ */
+export function getAllRegistrations(): Q.IPromise<IRegistration[]> {
+  return Q.Promise((resolve, reject) => {
+    registrationsModel.find({})
+        .sort({ createdAt: -1 })
         .lean()
         .exec(resolveQuery(resolve, reject));
   });
 }
 
-// export function updateRegistrationByCode(code: IRegistration): IRegistration {
-//   return Q.Promise((resolve, reject) =>  {
-//     registrationsModel.findOne({ code })
-//         .lean()
-//         .exec(resolveQuery(resolve, reject));
-//   });
-// }
+export function getRegistrationById(id: string) {
+  return Q.Promise(function (resolve, reject) {
+    registrationsModel.findById(id, {"__v":0})
+        .exec(resolveQuery(resolve, reject));
+  });
+}
+
+export function getRegistrationByCode(code: string): Q.IPromise<IRegistration> {
+  return Q.Promise((resolve, reject) =>  {
+    registrationsModel.findOne({ code }, {"__v":0})
+        .exec(resolveQuery(resolve, reject));
+  });
+}
+
+/**
+ * Write
+ */
+export function createRegistrationRecord(code: string): Q.IPromise<IRegistration> {
+  const registration = new registrationsModel({ code });
+  save(registration);
+}
+
+export function save(registration: IRegistration): Q.IPromise<IRegistration> {
+  return Q.ninvoke<IRegistration>(registration, 'save')
+      .then((mongoResponse) => {
+        return mongoResponse[0];
+      })
+      .catch((err) => {
+        logger.error(`Error saving a registration record: ${err}`);
+        throw err;
+      });
+}

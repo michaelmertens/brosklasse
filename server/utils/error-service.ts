@@ -4,8 +4,17 @@ import { IError, IErrorResponse } from '../../public/src/api-contracts/common';
 export const ErrorTypes = {
   ERROR_AUTHENTICATION: 'authentication-error',
   ERROR_AUTHORIZATION: 'authorization-error',
+  ERROR_ENTITY_NOT_FOUND: 'not-found',
   ERROR_SERVICE_FAILURE: 'service-failure',
 };
+
+export class ServerError implements IError {
+  constructor(
+      public key?: string,
+      public message?: string,
+  ) {
+  }
+}
 
 export function isErrorOfType(error: IErrorResponse, key: string): boolean {
   return !!(error && error.error && error.error.key === key);
@@ -45,6 +54,8 @@ export function handleError(res: Response, logger: any) {
       const errorMessage = getErrorMessageForClient(err);
       if (errorMessage.error.key === ErrorTypes.ERROR_SERVICE_FAILURE) {
         res.status(500).send(errorMessage);
+      } else if (errorMessage.error.key === ErrorTypes.ERROR_ENTITY_NOT_FOUND) {
+        res.status(404).send(errorMessage);
       } else {
         res.status(400).send(errorMessage);
       }

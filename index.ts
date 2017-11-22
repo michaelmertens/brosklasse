@@ -44,7 +44,7 @@ function enableStandardHelmetOptions() {
 app.use(compression());
 app.use(cookieParser());
 
-app.set('port', process.env.PORT || 4201);
+app.set('port', process.env.PORT || 5001);
 app.use(bodyParser.json());
 app.enable('trust proxy');
 
@@ -86,7 +86,16 @@ app.get('/api/', (req: Request, res: Response) => {
   res.send('Hello World!');
 });
 
+/**
+ *  Registrations
+ **/
+// public
 app.post('/api/register/:code', registrationController.registerCode);
+
+// admin
+app.get('/api/admin/registrations/:code', registrationController.getRegistrationByCode);
+app.get('/api/admin/registrations', registrationController.getAllRegistrations);
+app.post('/api/admin/registrations/generate', registrationController.generateCode);
 
 
 function init() {
