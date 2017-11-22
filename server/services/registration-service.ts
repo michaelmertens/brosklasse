@@ -41,5 +41,5 @@ export async function registerCode(code: string, request: IRegistrationRequest):
   registration.tracking.openedPageAt = request.openedPageAt;
 
   // Delegate to repositories
-  return registrationRepository.update(registration);
+  return registrationRepository.save(registration);
 }
