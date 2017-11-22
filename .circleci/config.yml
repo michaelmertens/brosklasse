@@ -10,6 +10,8 @@ jobs:
       - add-ssh-keys:
           fingerprints:
             - "12:b8:85:7e:8b:5b:bc:f3:6f:21:65:03:be:76:0e:4a"
+            - "48:a0:87:54:ca:75:32:12:c6:9e:a2:77:a4:7a:08:a4"
+            - "8b:48:5e:67:0e:c9:16:47:32:f2:87:0c:1f:c8:60:ad"
 
       - checkout
 
