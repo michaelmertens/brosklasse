@@ -1,0 +1,29 @@
+<video autoplay loop muted id="bgvid">
+  <source src="assets/smoke.mp4" type="video/mp4">
+</video>
+
+<div class="content flex-center">
+
+  <ng-container *ngIf="!isSubmitted">
+    <ng-container *ngIf="!code">
+      <p>What's your code?</p>
+
+      <input type="code" [(ngModel)]="codeInput" (ngModelChange)="codeChanged($event)" placeholder="" />
+    </ng-container>
+
+    <ng-container *ngIf="code">
+      <h1>Brosklasse 2017</h1>
+
+      <p>You interested?</p>
+
+      <input type="email" [(ngModel)]="email" placeholder="Give us your e-mail" />
+
+      <button [disabled]="isSubmitting" (click)="decline()">No, thanks</button>
+      <button [disabled]="isSubmitting" (click)="submit()">Awesome!</button>
+    </ng-container>
+  </ng-container>
+
+  <ng-container *ngIf="isSubmitted">
+    <span>Don't call us, we'll call you!</span>
+  </ng-container>
+</div>

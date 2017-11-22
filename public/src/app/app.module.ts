@@ -5,16 +5,31 @@ import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
 import { HttpClientModule } from '@angular/common/http';
+import { RouterModule, Routes } from '@angular/router';
+import { RegistrationComponent } from './registration/registration.component';
 
+/*
+ Route Configuration
+ */
+const routes: Routes = [
+  { path: ':code', component: RegistrationComponent },
+  { path: '', component: RegistrationComponent },
+];
+
+/*
+ AppModule
+ */
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    RegistrationComponent
   ],
   imports: [
     HttpClientModule,
     CoreModule.forRoot(),
     SharedModule,
-    BrowserModule
+    BrowserModule,
+    RouterModule.forRoot(routes),
   ],
   providers: [],
   bootstrap: [AppComponent],
