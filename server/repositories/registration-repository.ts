@@ -30,6 +30,14 @@ export function getRegistrationById(id: string) {
   });
 }
 
+export function getRegistrationByCreator(user: string) {
+  return Q.Promise(function (resolve, reject) {
+    registrationsModel.find({ createdBy: user })
+        .lean()
+        .exec(resolveQuery(resolve, reject));
+  });
+}
+
 export function getRegistrationByCode(code: string): Q.IPromise<IRegistration> {
   return Q.Promise((resolve, reject) =>  {
     registrationsModel.findOne({ code }, {"__v":0})
@@ -40,12 +48,15 @@ export function getRegistrationByCode(code: string): Q.IPromise<IRegistration> {
 /**
  * Write
  */
-export function createRegistrationRecord(code: string, emailReservation?: string): Q.IPromise<IRegistration> {
+export function createRegistrationRecord(code: string, createdBy: string, emailReservation?: string): Q.IPromise<IRegistration> {
   const registration = new registrationsModel({
     code,
+    createdBy,
     reservedFor: emailReservation
   });
   save(registration);
+
+  return registration;
 }
 
 export function save(registration: IRegistration): Q.IPromise<IRegistration> {

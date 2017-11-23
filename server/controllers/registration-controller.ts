@@ -44,8 +44,14 @@ export async function getRegistrationByCode(req: Request, res: Response) {
 
 export async function getAllRegistrations(req: Request, res: Response) {
   try {
-    const response = await registrationService.getAllRegistrations();
-    res.send(response);
+    const username = req.query.by;
+    if (username) {
+      const response = await registrationService.getAllMyRegistrations(username);
+      res.send(response);
+    } else {
+      const response = await registrationService.getAllRegistrations();
+      res.send(response);
+    }
   } catch (err) {
     errorHandler.handleError(res, logger)(err);
   }
@@ -58,7 +64,10 @@ export async function getAllRegistrations(req: Request, res: Response) {
 export async function generateCode(req: Request, res: Response) {
   try {
     const reservationRequest: ICodeReservationRequest = req.body;
-    const newRegistration = await registrationService.generateNewRegistrationCode(reservationRequest.email);
+
+    const newRegistration = await registrationService.generateNewRegistrationCode(reservationRequest);
+    logger.info(`New code was generated for ${reservationRequest.email} by ${reservationRequest.createdBy}.`)
+
     res.send(newRegistration);
   } catch (err) {
     errorHandler.handleError(res, logger)(err);
@@ -70,8 +79,8 @@ export async function registerCode(req: Request, res: Response) {
   const registrationSpec: IRegistrationRequest = req.body;
 
   try {
-    await registrationService.registerCode(code, registrationSpec);
-    res.send({});
+    const newRegistration = await registrationService.registerCode(code, registrationSpec);
+    res.send(newRegistration);
   } catch (err) {
     errorHandler.handleError(res, logger)(err);
   }

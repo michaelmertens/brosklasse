@@ -1,9 +1,9 @@
-import { IRegistrationRequest } from '../../public/src/api-contracts/registration';
+import { ICodeReservationRequest, IRegistrationRequest } from '../../public/src/api-contracts/registration';
 import * as registrationRepository from './../repositories/registration-repository';
 import * as logService from '../utils/log-service';
-import { IRegistration } from '../repositories/db-models';
 import { generateRandomString } from '../utils/common';
 import { ErrorCodes, ServerError } from '../utils/error-service';
+import { IRegistration } from '../repositories/db-models';
 const logger = logService.getLogger('[registration-service]');
 
 /**
@@ -23,12 +23,17 @@ export async function getAllRegistrations(): Promise<IRegistration[]> {
   return registrations;
 }
 
+export async function getAllMyRegistrations(user: string): Promise<IRegistration[]> {
+  const registrations = await registrationRepository.getRegistrationByCreator(user);
+  return registrations;
+}
+
 /**
  * Write
  */
-export async function generateNewRegistrationCode(emailReservation?: string): Promise<IRegistration> {
+export async function generateNewRegistrationCode(emailReservation: ICodeReservationRequest): Promise<IRegistration> {
   const newCode = generateRandomString(6).toUpperCase();
-  return await registrationRepository.createRegistrationRecord(newCode, emailReservation);
+  return await registrationRepository.createRegistrationRecord(newCode, emailReservation.createdBy, emailReservation.email);
 }
 
 export async function registerCode(code: string, request: IRegistrationRequest): Promise<IRegistration> {

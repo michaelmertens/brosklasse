@@ -50,3 +50,22 @@ video {
   position: fixed;
   bottom: 25%;
 }
+
+input {
+  color: white;
+  border: none;
+  border: 0;
+  border-bottom: 1px solid white;
+  background: transparent;
+}
+
+input, button {
+  margin: 15px;
+  padding: 5px;
+}
+
+hr {
+  margin: 3em;
+  border: 0;
+  border-bottom: 1px dashed #666;
+}

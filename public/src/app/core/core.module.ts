@@ -6,6 +6,7 @@ import { SharedModule } from '../shared/shared.module';
 import { ApiService } from './services/api.service';
 import { LogService } from './services/log.service';
 import { RegistrationService } from './services/registration.service';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   imports: [

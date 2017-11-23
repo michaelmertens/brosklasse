@@ -10,6 +10,7 @@ export interface IErrorResponse {
 }
 
 export type ErrorCode =
+  'unknown-error' |
   'authentication-error' |
   'authorization-error' |
   'not-found' |

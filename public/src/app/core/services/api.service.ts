@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
-import { IErrorResponse } from '../../../api-contracts/common';
+import { IError, IErrorResponse } from '../../../api-contracts/common';
 import { LogService } from './log.service';
 import { environment } from '../../../environments/environment';
 import 'rxjs/add/observable/throw';
@@ -41,7 +41,7 @@ export class ApiService {
       statusText: errResponse.statusText,
     };
 
-    const unknownError: IErrorResponse = { key: 'unknown-error' };
+    const unknownError: IError = { key: 'unknown-error' };
     if (!errResponse.error || !errResponse.error.error) {
       obj.error = unknownError;
       return obj;
