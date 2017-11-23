@@ -2,9 +2,17 @@
   <source src="assets/smoke.mp4" type="video/mp4">
 </video>
 
-<div class="content flex-center">
+<div class="content flex-center" style="position: relative">
 
-  <ng-container *ngIf="!isSubmitted">
+  <ng-container *ngIf="error">
+    <span class="error-message">Code was invalid or already taken</span>
+  </ng-container>
+
+  <ng-container *ngIf="isChecking">
+    Checking...
+  </ng-container>
+
+  <ng-container *ngIf="!isChecking && !isSubmitted">
     <ng-container *ngIf="!code">
       <p>What's your code?</p>
 

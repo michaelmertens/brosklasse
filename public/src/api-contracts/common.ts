@@ -1,5 +1,5 @@
 export interface IError {
-  key?: string;
+  key?: ErrorCode;
   message?: string;
 }
 
@@ -8,3 +8,10 @@ export interface IErrorResponse {
   statusText?: string;
   error?: IError;
 }
+
+export type ErrorCode =
+  'authentication-error' |
+  'authorization-error' |
+  'not-found' |
+  'service-failure' |
+  'redirect-admin';

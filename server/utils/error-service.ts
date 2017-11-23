@@ -1,22 +1,23 @@
 import { Response } from 'express-serve-static-core';
-import { IError, IErrorResponse } from '../../public/src/api-contracts/common';
+import { ErrorCode, IError, IErrorResponse } from '../../public/src/api-contracts/common';
 
-export const ErrorTypes = {
+export const ErrorCodes: { [key: string]: ErrorCode } = {
   ERROR_AUTHENTICATION: 'authentication-error',
   ERROR_AUTHORIZATION: 'authorization-error',
   ERROR_ENTITY_NOT_FOUND: 'not-found',
   ERROR_SERVICE_FAILURE: 'service-failure',
+  REDIRECT_ADMIN: 'redirect-admin',
 };
 
 export class ServerError implements IError {
   constructor(
-      public key?: string,
+      public key?: ErrorCode,
       public message?: string,
   ) {
   }
 }
 
-export function isErrorOfType(error: IErrorResponse, key: string): boolean {
+export function isErrorOfType(error: IErrorResponse, key: ErrorCode): boolean {
   return !!(error && error.error && error.error.key === key);
 }
 
@@ -26,18 +27,21 @@ export function getErrorString(error: IError): string {
 
 export function isAuthenticationError(error: IErrorResponse) {
   const key = error.error.key;
-  return key === ErrorTypes.ERROR_AUTHENTICATION;
+  return key === ErrorCodes.ERROR_AUTHENTICATION;
 }
 
 export function isAuthorizationError(error: IErrorResponse) {
-  return error.error.key === ErrorTypes.ERROR_AUTHORIZATION;
+  return error.error.key === ErrorCodes.ERROR_AUTHORIZATION;
 }
 
-export function getErrorMessageForClient(error: IErrorResponse): IErrorResponse {
+export function getErrorMessageForClient(error: IErrorResponse | ErrorCode): IErrorResponse {
+  if (typeof(error) === "string") {
+    return  { error: { key: error} };
+  }
   if (error && error.error && error.error.key) {
     return { error: error.error };
   } else {
-    return { error: { key: ErrorTypes.ERROR_SERVICE_FAILURE } };
+    return { error: { key: ErrorCodes.ERROR_SERVICE_FAILURE } };
   }
 }
 
@@ -52,9 +56,9 @@ export function handleError(res: Response, logger: any) {
 
     if (!res.headersSent) {
       const errorMessage = getErrorMessageForClient(err);
-      if (errorMessage.error.key === ErrorTypes.ERROR_SERVICE_FAILURE) {
+      if (errorMessage.error.key === ErrorCodes.ERROR_SERVICE_FAILURE) {
         res.status(500).send(errorMessage);
-      } else if (errorMessage.error.key === ErrorTypes.ERROR_ENTITY_NOT_FOUND) {
+      } else if (errorMessage.error.key === ErrorCodes.ERROR_ENTITY_NOT_FOUND) {
         res.status(404).send(errorMessage);
       } else {
         res.status(400).send(errorMessage);

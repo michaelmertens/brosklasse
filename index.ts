@@ -90,6 +90,7 @@ app.get('/api/', (req: Request, res: Response) => {
  *  Registrations
  **/
 // public
+app.get('/api/register/:code', registrationController.checkCode);
 app.post('/api/register/:code', registrationController.registerCode);
 
 // admin

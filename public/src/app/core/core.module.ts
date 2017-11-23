@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { ApiService } from './services/api.service';
 import { LogService } from './services/log.service';
+import { RegistrationService } from './services/registration.service';
 
 @NgModule({
   imports: [
@@ -14,8 +15,10 @@ import { LogService } from './services/log.service';
     SharedModule,
   ],
   providers: [
-    ApiService,
     LogService,
+    AuthService,
+    ApiService,
+    RegistrationService,
   ],
   declarations: []
 })

@@ -4,3 +4,7 @@ export interface IRegistrationRequest {
   nrOfNoClicks: number;
   openedPageAt: Date;
 }
+
+export interface ICodeReservationRequest {
+  email?: string;
+}

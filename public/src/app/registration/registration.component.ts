@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
-import { ApiService } from '../core/services/api.service';
-import { IError } from '../../api-contracts/common';
+import { IError, IErrorResponse } from '../../api-contracts/common';
 import { take, finalize } from 'rxjs/operators';
-import { ActivatedRoute } from '@angular/router';
-
+import { ActivatedRoute, Router } from '@angular/router';
+import { RegistrationService } from '../core/services/registration.service';
+import { AuthService } from '../core/services/auth.service';
 
 @Component({
   selector: 'app-registration',
@@ -20,29 +20,56 @@ export class RegistrationComponent implements OnInit {
 
   public email: string;
   public error: IError;
+  public isChecking: boolean;
   public isSubmitting: boolean;
   public isSubmitted: boolean;
 
   constructor(
-    private apiService: ApiService,
+    private auth: AuthService,
     private route: ActivatedRoute,
+    private router: Router,
+    private registrationService: RegistrationService,
   ) {
-
   }
 
   public ngOnInit() {
     this.openedAt = moment();
     this.nrOfNoClick = 0;
     this.route.params.subscribe((params) => {
-      this.code = params.code;
+      this.setCode(params.code);
     });
   }
 
   public codeChanged() {
-    this.codeInput = (this.codeInput || '').toUpperCase();
+    this.error = undefined;
+    this.codeInput = (this.codeInput.substr(0,7) || '').toUpperCase();
+
     if (this.codeInput.length === 7) {
       this.code = this.codeInput;
+      this.setCode(this.code);
     }
+  }
+
+  private setCode(code: string): void {
+    if (!code || this.isChecking) return;
+
+    this.isChecking = true;
+    this.registrationService.checkCode(code).pipe(
+      take(1),
+      finalize(() => this.isChecking = false)
+    ).subscribe(() => {
+      this.code = code;
+    }, (err: IErrorResponse) => {
+      this.code = '';
+      this.codeInput = '';
+
+      // TODO: replace with authentication
+      if (err.error.key === 'redirect-admin') {
+        this.auth.makeAdmin();
+        this.router.navigate(['admin']);
+      }
+      this.error = err.error;
+    });
   }
 
   public decline() {
@@ -55,7 +82,7 @@ export class RegistrationComponent implements OnInit {
     }
 
     this.isSubmitting = true;
-    this.apiService.submitRegistration(this.code, this.email, this.openedAt.toDate(), this.nrOfNoClick)
+    this.registrationService.submitRegistration(this.code, this.email, this.openedAt.toDate(), this.nrOfNoClick)
       .pipe(
         take(1),
         finalize(() => this.isSubmitting = false)

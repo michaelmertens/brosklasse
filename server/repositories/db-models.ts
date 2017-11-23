@@ -5,6 +5,7 @@ export interface IRegistration {
   code: string;
   email?: string;
   registeredAt?: Date;
+  reservedFor?: string;
 
   createdAt?: Date;
   updatedAt?: Date;
@@ -23,6 +24,7 @@ export const registrationSchema = new mongoose.Schema({
   code: { type: String, unique: true },
   email: { type: String },
   registeredAt: { type: Date },
+  reservedFor: { type: String },
 
   tracking: registrationTrackingSchema,
 }, {

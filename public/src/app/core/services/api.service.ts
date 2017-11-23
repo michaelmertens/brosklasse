@@ -1,44 +1,29 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { IRegistrationRequest } from '../../../api-contracts/registration';
 import { Observable } from 'rxjs/Observable';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { IErrorResponse } from '../../../api-contracts/common';
 import { LogService } from './log.service';
-import 'rxjs/add/operator/catch';
+import { environment } from '../../../environments/environment';
+import 'rxjs/add/observable/throw';
 
 @Injectable()
 export class ApiService {
   // TODO: get from environment through buildphase
-  private baseUrl: string;
+  protected baseUrl: string;
 
   constructor(
-    private http: HttpClient,
-    private logger: LogService,
+    protected http: HttpClient,
+    protected logger: LogService,
   ) {
-    this.baseUrl = window.location.origin + '/api';
+    this.baseUrl = environment.apiBaseUrl +  '/api';
   }
-
-  public submitRegistration(code: string, email: string, openedPageAt: Date, nrOfNoClicks: number) {
-    const url: string = this.baseUrl + '/register/' + code;
-    const request: IRegistrationRequest = {
-      code,
-      email,
-      openedPageAt,
-      nrOfNoClicks,
-    };
-
-    return this.http.post(url, request)
-      .catch(this.handleError);
-  }
-
-  public handleError(errResponse: HttpErrorResponse): ErrorObservable {
+  protected handleError = (errResponse: HttpErrorResponse): ErrorObservable => {
     return Observable.throw(this.processError(errResponse));
   }
 
-  private processError(errResponse: HttpErrorResponse): IErrorResponse {
+  protected processError(errResponse: HttpErrorResponse): IErrorResponse {
     const err = this.parseError(errResponse);
-    err.error = Object.assign({ key: 'unknown-error' }, err.error);
 
     if (!errResponse || errResponse.error instanceof Error) {
       // A client-side or network error occurred. Handle it accordingly.
@@ -48,17 +33,30 @@ export class ApiService {
       this.logger.log(`Backend returned ${errResponse.status} - ${errResponse.statusText || ''}: ${JSON.stringify(errResponse.error)}`);
     }
     return err;
-  }
+  };
 
-  private parseError(errResponse: HttpErrorResponse): any {
+  private parseError(errResponse: HttpErrorResponse): IErrorResponse {
+    const obj: IErrorResponse = {
+      status: errResponse.status,
+      statusText: errResponse.statusText,
+    };
+
+    const unknownError: IErrorResponse = { key: 'unknown-error' };
+    if (!errResponse.error || !errResponse.error.error) {
+      obj.error = unknownError;
+      return obj;
+    }
+
     try {
-      if (typeof errResponse.error === 'string') {
-        return JSON.parse(errResponse.error) || {};
+      obj.error = errResponse.error.error;
+      if (typeof errResponse.error.error === 'string') {
+        obj.error = JSON.parse(errResponse.error.error);
       }
-      return errResponse || {};
+
+      return obj;
     } catch (err) {
-      this.logger.error('Failed to parse ErrorResponse', { originalError: errResponse });
-      return errResponse || {};
+      this.logger.error('Failed to parse ErrorResponse', { originalError: errResponse.error });
+      return obj;
     }
   }
 

@@ -3,12 +3,17 @@ import * as registrationRepository from './../repositories/registration-reposito
 import * as logService from '../utils/log-service';
 import { IRegistration } from '../repositories/db-models';
 import { generateRandomString } from '../utils/common';
-import { ErrorTypes, ServerError } from '../utils/error-service';
+import { ErrorCodes, ServerError } from '../utils/error-service';
 const logger = logService.getLogger('[registration-service]');
 
 /**
  * Read
  */
+export async function isValidCode(code: string): Promise<boolean> {
+  const registration = await registrationRepository.getRegistrationByCode(code);
+  return (registration && !registration.email);
+}
+
 export async function getRegistrationByCode(code: string): Promise<IRegistration> {
   return await registrationRepository.getRegistrationByCode(code);
 }
@@ -21,16 +26,16 @@ export async function getAllRegistrations(): Promise<IRegistration[]> {
 /**
  * Write
  */
-export async function generateNewRegistrationCode(): Promise<IRegistration> {
+export async function generateNewRegistrationCode(emailReservation?: string): Promise<IRegistration> {
   const newCode = generateRandomString(6).toUpperCase();
-  return await registrationRepository.createRegistrationRecord(newCode);
+  return await registrationRepository.createRegistrationRecord(newCode, emailReservation);
 }
 
 export async function registerCode(code: string, request: IRegistrationRequest): Promise<IRegistration> {
   // Validation
   let registration = await registrationRepository.getRegistrationByCode(code);
   if (!registration) {
-    throw new ServerError(ErrorTypes.ERROR_ENTITY_NOT_FOUND);
+    throw new ServerError(ErrorCodes.ERROR_ENTITY_NOT_FOUND);
   }
 
   // Application Logic

@@ -9,6 +9,7 @@ body, app-root, input{
   color: white;
 }
 body, app-root {
+  background-color: black;
   position: fixed;
   top: 0;
   bottom: 0;
@@ -40,4 +41,12 @@ video {
   transform: translateX(-50%) translateY(-50%);
   background-color: rgba(0,0,0,0.2);
   background-size: cover;
+}
+.error-message {
+  color: red;
+  background-color: white;
+  display: block;
+  padding: 1rem;
+  position: fixed;
+  bottom: 25%;
 }

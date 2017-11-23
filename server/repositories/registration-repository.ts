@@ -40,8 +40,11 @@ export function getRegistrationByCode(code: string): Q.IPromise<IRegistration> {
 /**
  * Write
  */
-export function createRegistrationRecord(code: string): Q.IPromise<IRegistration> {
-  const registration = new registrationsModel({ code });
+export function createRegistrationRecord(code: string, emailReservation?: string): Q.IPromise<IRegistration> {
+  const registration = new registrationsModel({
+    code,
+    reservedFor: emailReservation
+  });
   save(registration);
 }
 

@@ -1,14 +1,36 @@
 import { Request, Response } from 'express-serve-static-core';
-import { IRegistrationRequest } from '../../public/src/api-contracts/registration';
+import { ICodeReservationRequest, IRegistrationRequest } from '../../public/src/api-contracts/registration';
 import * as errorHandler from '../utils/error-service';
 import * as logService from '../utils/log-service';
 import * as registrationService from '../services/registration-service';
+import { ErrorCodes, getErrorMessageForClient } from '../utils/error-service';
+import { constants } from '../config';
 const logger = logService.getLogger('[registration-controller]');
 
 
 /**
  * Read
  */
+export async function checkCode(req: Request, res: Response) {
+  const code: string = req.params.code;
+  try {
+    if (code === constants.ADMIN_CODE) {
+      res.status(400).send(getErrorMessageForClient(ErrorCodes.REDIRECT_ADMIN));
+      return;
+    }
+
+    const isValidCode = await registrationService.isValidCode(code);
+    if (!isValidCode) {
+      res.status(404).send();
+      return;
+    }
+
+    res.status(200).send();
+  } catch (err) {
+    errorHandler.handleError(res, logger)(err);
+  }
+}
+
 export async function getRegistrationByCode(req: Request, res: Response) {
   const code: string = req.params.code;
 
@@ -35,7 +57,8 @@ export async function getAllRegistrations(req: Request, res: Response) {
  */
 export async function generateCode(req: Request, res: Response) {
   try {
-    const newRegistration = await registrationService.generateNewRegistrationCode();
+    const reservationRequest: ICodeReservationRequest = req.body;
+    const newRegistration = await registrationService.generateNewRegistrationCode(reservationRequest.email);
     res.send(newRegistration);
   } catch (err) {
     errorHandler.handleError(res, logger)(err);
