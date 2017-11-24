@@ -1,0 +1,40 @@
+<h1>Admin Dashboard</h1>
+
+<hr>
+
+<ng-container *ngIf="!adminUser">
+  <p>What's your name?</p>
+  <input type="text" [(ngModel)]="adminUserInput">
+
+  <button (click)="saveAdmin(adminUserInput)">Confirm</button>
+</ng-container>
+
+<ng-container *ngIf="adminUser">
+  <p>You can add a new reservation here, you will receive a code to pass on to that person.</p>
+
+  <input type="text" [(ngModel)]="email" placeholder="Invitee's email">
+  <button [disabled]="isReserving" (click)="makeReservation(email);">Generate a code</button>
+
+
+  <hr>
+
+  <h3>My reservations</h3>
+  <div>
+    <table>
+      <thead>
+      <tr>
+        <th>Code</th>
+        <th>Reserved for</th>
+        <th>Registered</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let row of results">
+        <td>{{row.code}}</td>
+        <td>{{row.reservedFor}}</td>
+        <td>{{row.email}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</ng-container>
