@@ -1,5 +1,5 @@
 <video autoplay loop muted id="bgvid">
-  <source src="assets/smoke.mp4" type="video/mp4">
+  <source src="assets/smoke.webm" type="video/webm">
 </video>
 
 <div class="content flex-center" style="position: relative">
@@ -8,7 +8,7 @@
     <span class="error-message">Code was invalid or already taken</span>
   </ng-container>
 
-  <ng-container *ngIf="!isChecking && !isSubmitted">
+  <ng-container *ngIf="!isSubmitted">
     <ng-container *ngIf="!code">
       <p>What's your code?</p>
 
@@ -21,7 +21,9 @@
     <ng-container *ngIf="code">
       <img src="./assets/brosklasse.png" alt="">
 
-      <p>You interested?</p>
+      <p>Brosklasse is a mystery event to escape reality  and find back long lost friends and traditions. prepare for a weekend of celebration or return to your daily chores and forever hold your silence. let's write history together.</p>
+
+      <p>Be part of this experience?</p>
 
       <input type="email" [(ngModel)]="email" placeholder="Give us your e-mail" />
 
