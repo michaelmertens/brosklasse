@@ -25,7 +25,7 @@ export async function checkCode(req: Request, res: Response) {
       return;
     }
 
-    res.status(200).send();
+    res.status(200).send({});
   } catch (err) {
     errorHandler.handleError(res, logger)(err);
   }
