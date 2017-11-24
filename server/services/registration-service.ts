@@ -32,7 +32,7 @@ export async function getAllMyRegistrations(user: string): Promise<IRegistration
  * Write
  */
 export async function generateNewRegistrationCode(emailReservation: ICodeReservationRequest): Promise<IRegistration> {
-  const newCode = generateRandomString(6).toUpperCase();
+  const newCode = generateRandomString(7).toUpperCase();
   return await registrationRepository.createRegistrationRecord(newCode, emailReservation.createdBy, emailReservation.email);
 }
 
