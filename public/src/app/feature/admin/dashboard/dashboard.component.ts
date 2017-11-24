@@ -17,7 +17,7 @@ export class DashboardComponent implements OnInit {
 
   public isReserving: boolean;
   public email: string;
-  public results: { reservedFor: string, email: string, code: string }[] = [];
+  public results: { reservedFor: string, email?: string, code: string }[] = [];
 
   constructor(
     private auth: AuthService,
@@ -43,7 +43,7 @@ export class DashboardComponent implements OnInit {
     this.adminUser = this.auth.getAdminUser();
 
     if (this.adminUser) {
-      this.registrationService.getAllReservationsBy(this.adminUser).subscribe((list: IReservationTO[]) => {
+      this.registrationService.getAllReservationsBy(this.adminUser).subscribe((list: IRegistrationTO[]) => {
         this.results = list.map((r) => {
           return {
             code: r.code,
