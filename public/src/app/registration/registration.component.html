@@ -8,19 +8,18 @@
     <span class="error-message">Code was invalid or already taken</span>
   </ng-container>
 
-  <ng-container *ngIf="isChecking">
-    Checking...
-  </ng-container>
-
   <ng-container *ngIf="!isChecking && !isSubmitted">
     <ng-container *ngIf="!code">
       <p>What's your code?</p>
 
-      <input type="code" [(ngModel)]="codeInput" (ngModelChange)="codeChanged($event)" placeholder="" />
+      <input *ngIf="!isChecking" type="code" [(ngModel)]="codeInput" (ngModelChange)="codeChanged($event)" placeholder="" />
+      <ng-container *ngIf="isChecking">
+        Checking...
+      </ng-container>
     </ng-container>
 
     <ng-container *ngIf="code">
-      <h1>Brosklasse 2017</h1>
+      <img src="./assets/brosklasse.png" alt="">
 
       <p>You interested?</p>
 

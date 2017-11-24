@@ -98,6 +98,11 @@ app.get('/api/admin/registrations/:code', registrationController.getRegistration
 app.get('/api/admin/registrations', registrationController.getAllRegistrations);
 app.post('/api/admin/registrations/generate', registrationController.generateCode);
 
+app.route('/*')
+    .get((req, res) => {
+      res.sendFile(path.resolve(app.get('appPath') + '/index.html'));
+    });
+
 
 function init() {
   app.listen(app.get('port'), () => {
