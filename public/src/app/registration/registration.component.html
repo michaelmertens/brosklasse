@@ -13,7 +13,7 @@
     <ng-container *ngIf="!code">
       <p>What's your code?</p>
 
-      <input type="code" [(ngModel)]="codeInput" (ngModelChange)="codeChanged($event)" placeholder="" />
+      <input type="code" [(ngModel)]="codeInput" class="text-center" (ngModelChange)="codeChanged($event)" placeholder="" />
       <ng-container *ngIf="isChecking">
         Checking...
       </ng-container>

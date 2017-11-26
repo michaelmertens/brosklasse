@@ -90,10 +90,12 @@ export class RegistrationComponent implements OnInit {
 
   public decline(): void {
     this.nrOfNoClick += 1;
+    // this.registrationService.trackClick(this.code, 'NO', this.openedAt.toDate());
   }
 
   public convince(): void {
     this.nrOfConvinceClick += 1;
+    // this.registrationService.trackClick(this.code, 'CONVINCE', this.openedAt.toDate());
     this.sellingpoints.shift();
   }
 
@@ -104,6 +106,7 @@ export class RegistrationComponent implements OnInit {
 
     if (!this.email) {
       window.alert("Don't forget your contact details.");
+      return;
     }
 
     this.isSubmitting = true;
