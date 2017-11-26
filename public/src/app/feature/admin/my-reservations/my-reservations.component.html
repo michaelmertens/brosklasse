@@ -1,11 +1,18 @@
-<h3>All  reservations:</h3>
+<h3>Code Generator</h3>
+
+<p>You can add a new reservation here, you will receive a code to pass on to that person.</p>
+
+<input type="text" [(ngModel)]="email" placeholder="Invitee's email">
+<button class="btn btn-primary" [disabled]="isReserving" (click)="makeReservation(email);">Generate a code</button>
+
 <hr>
+
+<h3>My reservations</h3>
 <div>
   <table class="table">
     <thead>
     <tr>
       <th>Code</th>
-      <th>Created by</th>
       <th>Reserved for</th>
       <th>Registered</th>
     </tr>
@@ -13,7 +20,6 @@
     <tbody>
     <tr *ngFor="let row of results">
       <td>{{row.code}}</td>
-      <td>{{row.createdBy}}</td>
       <td>{{row.reservedFor}}</td>
       <td>{{row.email}}</td>
     </tr>

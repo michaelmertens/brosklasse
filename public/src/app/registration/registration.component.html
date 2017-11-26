@@ -28,6 +28,7 @@
       <input type="email" [(ngModel)]="email" placeholder="Give us your e-mail" />
 
       <button [disabled]="isSubmitting" (click)="decline()">No, thanks</button>
+      <button [disabled]="isSubmitting" (click)="convince()">Not convinced yet?</button>
       <button [disabled]="isSubmitting" (click)="submit()">Awesome!</button>
     </ng-container>
   </ng-container>

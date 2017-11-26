@@ -1,5 +1,4 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
@@ -8,14 +7,13 @@ import { CoreModule } from './core/core.module';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 import { RegistrationComponent } from './registration/registration.component';
-import { AdminModule } from './feature/admin/admin.module';
-import { DashboardComponent } from './feature/admin/dashboard/dashboard.component';
+import { AdminModule, adminRouting } from './feature/admin/admin.module';
+import { AdminComponent } from './feature/admin/admin.component';
 
 /*
  Route Configuration
  */
 const routes: Routes = [
-  { path: 'admin', component: DashboardComponent },
   { path: ':code', component: RegistrationComponent },
   { path: '', component: RegistrationComponent },
 ];
@@ -31,7 +29,6 @@ const routes: Routes = [
   imports: [
     HttpClientModule,
     CoreModule.forRoot(),
-    NgbModule.forRoot(),
     SharedModule,
     AdminModule,
     BrowserModule,

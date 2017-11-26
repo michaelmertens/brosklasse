@@ -72,11 +72,15 @@ export class RegistrationComponent implements OnInit {
     });
   }
 
-  public decline() {
+  public decline(): void {
     this.nrOfNoClick += 1;
   }
 
-  public submit() {
+  public convince(): void {
+
+  }
+
+  public submit(): void {
     if (this.isSubmitting) {
       return;
     }

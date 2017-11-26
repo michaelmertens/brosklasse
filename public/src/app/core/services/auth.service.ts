@@ -13,6 +13,7 @@ export class AuthService {
   constructor() { }
 
   makeAdmin() {
+    console.info(`Giving admin-rights`);
     return localStorage.setItem(this.adminKey, this.adminValue);
   }
 
@@ -24,7 +25,8 @@ export class AuthService {
     return localStorage.getItem(this.nameKey);
   }
 
-  saveAdminUser(user: AdminUser) {
+  saveAdminUser(user: AdminUser): void {
+    console.info(`Setting admin user to ${user}`);
     localStorage.setItem(this.nameKey, user);
   }
 }

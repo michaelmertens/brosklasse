@@ -1,23 +1,32 @@
 /* You can add global styles to this file, and also import other style files */
 
+$icon-font-path: "~assets/fonts/bootstrap/";
+@import './../node_modules/bootstrap-sass/assets/stylesheets/bootstrap';
+
+
+
 * {
   margin: 0;
   padding: 0;
   outline: 0;
 }
-body, app-root, input{
+body {
+  background-color: black;
+}
+
+body, app-root, input {
   font-family: Roboto;
   color: white;
 }
-body, app-root {
-  background-color: black;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  @extend .flex-center;
-}
+
+//app-root {
+//  position: fixed;
+//  top: 0;
+//  bottom: 0;
+//  left: 0;
+//  right: 0;
+//  @extend .flex-center;
+//}
 .flex-center {
   display: flex;
   flex-direction: column;

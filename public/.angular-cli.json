@@ -19,7 +19,6 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "../node_modules/bootstrap/dist/css/bootstrap.min.css",
         "styles.scss"
       ],
       "scripts": [],
@@ -52,6 +51,13 @@
     },
     "styleExt": "scss",
     "component": {
+      "spec": false
+    },
+    "guard": {
+      "spec": false
+    },
+    "pipe": {
+      "spec": false
     }
   }
 }

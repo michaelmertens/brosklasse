@@ -55,8 +55,14 @@ export class RegistrationService extends ApiService {
     );
   }
 
+  public getAllReservations(): Observable<IRegistrationTO[]> {
+    const url: string = this.baseUrl + '/admin/registrations';
+    return this.http.get(url).pipe(
+      catchError(this.handleError)
+    );
+  }
 
-  getAllReservationsBy(user: AdminUser): Observable<IRegistrationTO[]> {
+  public getAllReservationsBy(user: AdminUser): Observable<IRegistrationTO[]> {
     const url: string = this.baseUrl + '/admin/registrations?by=' + user;
     return this.http.get(url).pipe(
       catchError(this.handleError)
