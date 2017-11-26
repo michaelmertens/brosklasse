@@ -7,8 +7,7 @@ import { CoreModule } from './core/core.module';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 import { RegistrationComponent } from './registration/registration.component';
-import { AdminModule, adminRouting } from './feature/admin/admin.module';
-import { AdminComponent } from './feature/admin/admin.component';
+import { AdminModule } from './feature/admin/admin.module';
 
 /*
  Route Configuration
