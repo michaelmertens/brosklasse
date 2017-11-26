@@ -50,6 +50,7 @@ export class RegistrationComponent implements OnInit {
     ];
     this.openedAt = moment();
     this.nrOfNoClick = 0;
+    this.nrOfConvinceClick = 0;
     this.route.params.subscribe((params) => {
       this.setCode(params.code);
     });

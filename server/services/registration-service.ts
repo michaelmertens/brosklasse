@@ -48,6 +48,7 @@ export async function registerCode(code: string, request: IRegistrationRequest):
   registration.email = request.email;
   registration.tracking = registration.tracking || {};
   registration.tracking.nrOfNoClick = request.nrOfNoClicks;
+  registration.tracking.nrOfConvinceClicks = request.nrOfConvinceClicks;
   registration.tracking.openedPageAt = request.openedPageAt;
 
   // Delegate to repositories

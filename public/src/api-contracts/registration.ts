@@ -13,7 +13,7 @@ export interface IRegistrationRequest {
   code: string;
   email: string;
   nrOfNoClicks: number;
-  nrOfConvinceClick: number;
+  nrOfConvinceClicks: number;
   openedPageAt: Date;
 }
 

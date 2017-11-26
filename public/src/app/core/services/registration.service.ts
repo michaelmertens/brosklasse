@@ -26,14 +26,14 @@ export class RegistrationService extends ApiService {
     );
   }
 
-  public submitRegistration(code: string, email: string, openedPageAt: Date, nrOfNoClicks: number, nrOfConvinceClick: number) {
+  public submitRegistration(code: string, email: string, openedPageAt: Date, nrOfNoClicks: number, nrOfConvinceClicks: number) {
     const url: string = this.baseUrl + '/register/' + code;
     const request: IRegistrationRequest = {
       code,
       email,
       openedPageAt,
       nrOfNoClicks,
-      nrOfConvinceClick,
+      nrOfConvinceClicks,
     };
 
     return this.http.post(url, request).pipe(

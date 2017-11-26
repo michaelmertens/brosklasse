@@ -13,11 +13,13 @@ export interface IRegistration {
   tracking?: {
     openedPageAt?: Date;
     nrOfNoClick?: number;
+    nrOfConvinceClicks?: number;
   }
 }
 
 const registrationTrackingSchema = new mongoose.Schema({
   openedPageAt: { type: Date },
+  nrOfConvinceClick: { type: Number },
   nrOfNoClick: { type: Number },
 });
 
