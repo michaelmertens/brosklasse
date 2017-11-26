@@ -1,4 +1,36 @@
+@import './../../styles/variables';
+@import './../../styles/mixins';
+
+
+:host {
+  height: 100vh;
+  min-height: 100vh;
+  background-color: rgba(255,205,255,0.2);
+}
+
 h1 {
   font-size: 4rem;
   margin-bottom: 50px;
+}
+
+
+.content {
+  max-width: 90%;
+  padding: 80px;
+  background-color: rgba(80,50,50,0.5);
+  border-radius: 50px;
+
+  @include breakpoint($sm) {
+    max-width: 70%;
+  }
+  @include breakpoint($md) {
+    max-width: 60%;
+  }
+  @include breakpoint($lg) {
+    max-width: 50%;
+  }
+}
+
+.highlight {
+  color: #da8923;
 }

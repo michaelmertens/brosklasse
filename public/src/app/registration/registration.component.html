@@ -1,5 +1,6 @@
 <video autoplay loop muted id="bgvid">
-  <source src="assets/smoke.webm" type="video/webm">
+  <source src="assets/smoke.mp4" type="video/mp4" />
+  <img src="assets/images/smoke.jpg" title="Your browser does not support the <video> tag" />
 </video>
 
 <div class="content flex-center" style="position: relative">
@@ -12,24 +13,26 @@
     <ng-container *ngIf="!code">
       <p>What's your code?</p>
 
-      <input *ngIf="!isChecking" type="code" [(ngModel)]="codeInput" (ngModelChange)="codeChanged($event)" placeholder="" />
+      <input type="code" [(ngModel)]="codeInput" (ngModelChange)="codeChanged($event)" placeholder="" />
       <ng-container *ngIf="isChecking">
         Checking...
       </ng-container>
     </ng-container>
 
-    <ng-container *ngIf="code">
+    <ng-container *ngIf="!isChecking && code">
       <img src="./assets/brosklasse.png" alt="">
 
-      <p>Brosklasse is a mystery event to escape reality  and find back long lost friends and traditions. prepare for a weekend of celebration or return to your daily chores and forever hold your silence. let's write history together.</p>
+      <p class="text-center">Brosklasse is a mystery event to escape reality and find back long lost friends and traditions. Prepare for a weekend of celebration or return to your daily chores and forever hold your silence. Let's write history together.</p>
+
+      <p class="text-center highlight">{{sellingpoints[0]}}</p>
 
       <p>Be part of this experience?</p>
 
       <input type="email" [(ngModel)]="email" placeholder="Give us your e-mail" />
 
-      <button [disabled]="isSubmitting" (click)="decline()">No, thanks</button>
-      <button [disabled]="isSubmitting" (click)="convince()">Not convinced yet?</button>
-      <button [disabled]="isSubmitting" (click)="submit()">Awesome!</button>
+      <button class="btn btn-success" [disabled]="isSubmitting" (click)="submit()">Awesome!</button>
+      <button class="btn btn-default" [disabled]="isSubmitting" *ngIf="sellingpoints.length > 1" (click)="convince()">Not convinced yet?</button>
+      <button class="btn btn-danger" [disabled]="isSubmitting" (click)="decline()">No, thanks</button>
     </ng-container>
   </ng-container>
 
