@@ -32,11 +32,10 @@ if (constants.isDev) {
 
 // Helmet options applicable for both local development and online mode
 function enableStandardHelmetOptions() {
-  app.use(helmet.frameguard());
+  app.use(helmet.frameguard({ action: 'allow-from', domain: 'https://www.brosklasse.be' }));
   app.use(helmet.dnsPrefetchControl());
   app.use(helmet.ieNoOpen());
   app.use(helmet.hidePoweredBy());
-  app.use(helmet.frameguard());
   app.use(helmet.noSniff());
   app.use(helmet.xssFilter());
 }
